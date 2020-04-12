@@ -1,0 +1,38 @@
+.profile_pic {
+    width: 100%;
+    
+}
+.text-murder {
+    opacity: 0.5;
+    font-size: 0.8em;
+}
+
+i.icon {
+    font-size: 1.5em;
+}
+i.icon:hover {
+    font-size: 1.6em;
+    transition: 0.25s;
+}
+
+.cartao {
+    max-height: 450px
+}
+
+.match-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 50px;
+    border-radius: 25px
+}
+
+.match-container img {
+    width: 250px;
+    border-radius: 35px;
+    margin-left: auto;
+    margin-right: auto;
+}
