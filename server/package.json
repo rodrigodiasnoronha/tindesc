@@ -31,6 +31,7 @@
   "devDependencies": {
     "eslint": "^7.12.1",
     "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-adonis": "^1.0.15",
     "eslint-plugin-import": "^2.22.1",
     "prettier": "^2.1.2",
     "sqlite3": "^5.0.0"
