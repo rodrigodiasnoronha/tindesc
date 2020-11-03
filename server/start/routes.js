@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 /*
 |--------------------------------------------------------------------------
@@ -14,17 +14,29 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route');
+const Route = use('Route')
 
 Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' };
-});
+  return { greeting: 'Hello world in JSON' }
+})
 
-Route.post('/api/auth/login', 'AuthController.login').validator('Login');
-Route.post('/api/auth/register', 'AuthController.register').validator(
-  'Register'
-);
+/**
+ *
+ * Dashboard routes
+ *
+ */
 
-// Likes and Dislike Routes
-Route.post('/api/likes', 'LikeController.store').middleware(['auth']);
-Route.post('/api/dislikes', 'DislikeController.store').middleware(['auth']);
+Route.get('/api/dashboard', 'DashboardController.usersList').middleware([
+  'auth',
+])
+
+/**
+ *
+ * Auth routes
+ *
+ */
+
+Route.post('/api/auth/signup', 'AuthController.signUp').validator('SignUp')
+Route.post('/api/auth/signin', 'AuthController.signIn').validator(
+  'SignInEmailAndPassword'
+)
