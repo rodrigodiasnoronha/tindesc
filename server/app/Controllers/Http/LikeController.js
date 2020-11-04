@@ -1,0 +1,50 @@
+'use strict'
+
+/** @typedef {import('@adonisjs/framework/src/Request')} Request */
+/** @typedef {import('@adonisjs/framework/src/Response')} Response */
+/** @typedef {import('@adonisjs/framework/src/View')} View */
+
+/**  @type {import('@adonisjs/lucid/src/Lucid/Model')}  */
+const User = use('App/Models/User')
+
+/**  @type {import('@adonisjs/lucid/src/Lucid/Model')}  */
+const Like = use('App/Models/Like')
+
+class LikeController {
+  /**
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+  async likesGivenUserAuth({ auth, request }) {
+    const user = await auth.getUser()
+
+    await user.load('likesGiven')
+    await user.load('likesReceived')
+
+    return user
+  }
+
+  /**
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+  async like({ params, auth }) {
+    /** @type {Number}  */
+    const userLikedId = params.userLikedId
+
+    await User.findOrFail(userLikedId)
+
+    return await Like.create({
+      user_liked_id: userLikedId,
+      user_like_id: auth.user.id,
+    })
+  }
+}
+
+module.exports = LikeController

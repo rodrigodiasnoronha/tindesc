@@ -38,8 +38,6 @@ test('return all users with pagination', async ({ client }) => {
     .loginVia(user, 'jwt')
     .end()
 
-  console.log(dashboardResponse)
-
   dashboardResponse.assertStatus(200)
 })
 

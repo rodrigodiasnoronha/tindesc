@@ -32,6 +32,19 @@ Route.get('/api/dashboard', 'DashboardController.usersList').middleware([
 
 /**
  *
+ * Likes user Auth
+ *
+ */
+
+Route.get('/api/likes', 'LikeController.likesGivenUserAuth').middleware([
+  'auth',
+])
+Route.post('/api/likes/:userLikedId', 'LikeController.like').middleware([
+  'auth',
+])
+
+/**
+ *
  * Auth routes
  *
  */

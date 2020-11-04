@@ -7,14 +7,14 @@ const Model = use('Model')
 const Hash = use('Hash')
 
 class User extends Model {
-  static boot () {
+  static boot() {
     super.boot()
 
     /**
      * A hook to hash the user password before saving
      * it to the database.
      */
-    this.addHook('beforeSave', async (userInstance) => {
+    this.addHook('beforeSave', async userInstance => {
       if (userInstance.dirty.password) {
         userInstance.password = await Hash.make(userInstance.password)
       }
@@ -31,8 +31,18 @@ class User extends Model {
    *
    * @return {Object}
    */
-  tokens () {
+  tokens() {
     return this.hasMany('App/Models/Token')
+  }
+
+  // likes likes recebidos do usuário
+  likesReceived() {
+    return this.hasMany('App/Models/Like', 'id', 'user_liked_id')
+  }
+
+  // likes que o usuário deu
+  likesGiven() {
+    return this.hasMany('App/Models/Like', 'id', 'user_like_id')
   }
 }
 
