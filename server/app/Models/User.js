@@ -44,6 +44,16 @@ class User extends Model {
   likesGiven() {
     return this.hasMany('App/Models/Like', 'id', 'user_like_id')
   }
+
+  // dislike recebido pelo usuário
+  dislikesReceived() {
+    return this.hasMany('App/Models/Dislike', 'id', 'user_disliked_id')
+  }
+
+  // dislike que o usuário deu
+  dislikesGiven() {
+    return this.hasMany('App/Models/Dislike', 'id', 'user_dislike_id')
+  }
 }
 
 module.exports = User

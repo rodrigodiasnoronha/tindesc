@@ -1,4 +1,5 @@
 'use strict'
+
 /** @type {import('@adonisjs/vow/src/Suite')}  */
 const { test, trait, before, after } = use('Test/Suite')('Auth')
 trait('Test/ApiClient')
@@ -8,7 +9,7 @@ trait('Auth/Client')
 const User = use('App/Models/User')
 
 /** @type {import('@adonisjs/lucid/src/Lucid/Model')}  */
-const Like = use('App/Models/Like')
+const Dislike = use('App/Models/Dislike')
 
 before(async () => {
   await User.create({
@@ -23,41 +24,35 @@ before(async () => {
 
 after(async () => {
   await User.truncate()
-  await Like.truncate()
+  await Dislike.truncate()
 })
 
-test('return the user logged with all his likes', async ({ client }) => {
-  const userData = {
-    name: 'test',
-    email: 'test@test.com',
-    password: 'test',
-    bio: 'i am a tester',
-    username: 'tester',
+test('return the user logged with all his dislikes', async ({ client }) => {
+  const userLoggedData = {
+    name: 'david',
+    username: 'david',
+    email: 'david@email.com',
+    password: '123',
+  }
+  const userDislikedData = {
+    name: 'fake',
+    username: 'faker',
+    password: '123',
+    email: 'faker@email.com',
   }
 
-  const userData2 = {
-    name: 'abc',
-    email: 'abc@abc.com',
-    password: 'test',
-    bio: '',
-    username: 'abc',
-  }
+  const userLogged = await User.create(userLoggedData)
+  const userDisliked = await User.create(userDislikedData)
 
-  // user1 should like user2
-  const user1 = await User.create(userData)
-  const user2 = await User.create(userData2)
-
-  await client.post(`/api/likes/${user2.id}`).loginVia(user1, 'jwt').end()
-
-  const likesResponse = await client
-    .get('/api/likes')
-    .loginVia(user1, 'jwt')
+  const dislikeResponse = await client
+    .post(`/api/dislikes/${userDisliked.id}`)
+    .loginVia(userLogged, 'jwt')
     .end()
 
-  likesResponse.assertStatus(200)
+  dislikeResponse.assertStatus(200)
 })
 
-test('an user should likes another user', async ({ client }) => {
+test('an user should dislikes another user', async ({ client }) => {
   const userData = {
     name: 'bob',
     email: 'bob@email.com',
@@ -75,9 +70,9 @@ test('an user should likes another user', async ({ client }) => {
   const userBob = await User.create(userData)
   const userMike = await User.create(userData2)
 
-  // bob should like mike
+  // bob should dislike mike
   const likeResponse = await client
-    .post(`/api/likes/${userMike.id}`)
+    .post(`/api/dislikes/${userMike.id}`)
     .loginVia(userBob, 'jwt')
     .end()
 

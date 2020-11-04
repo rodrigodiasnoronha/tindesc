@@ -45,6 +45,21 @@ Route.post('/api/likes/:userLikedId', 'LikeController.like').middleware([
 
 /**
  *
+ * Dislike Routes
+ *
+ */
+
+Route.get(
+  '/api/dislikes',
+  'DislikeController.dislikesGivenUserAuth'
+).middleware(['auth'])
+Route.post(
+  '/api/dislikes/:userDislikedId',
+  'DislikeController.dislike'
+).middleware(['auth'])
+
+/**
+ *
  * Auth routes
  *
  */
