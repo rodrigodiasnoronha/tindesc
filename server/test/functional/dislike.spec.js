@@ -78,3 +78,43 @@ test('an user should dislikes another user', async ({ client }) => {
 
   likeResponse.assertStatus(200)
 })
+
+test('return unique dislike by id', async ({ client }) => {
+  const userData = {
+    name: 'evan',
+    email: 'evan@email.com',
+    password: '123',
+    username: 'evan',
+  }
+
+  const userData2 = {
+    name: 'drew',
+    email: 'drew@email.com',
+    password: '123',
+    username: 'drew',
+  }
+
+  const userEvan = await User.create(userData)
+  const userDrew = await User.create(userData2)
+
+  // evan dislike drew
+  await Dislike.create({
+    user_disliked_id: userDrew.id,
+    user_dislike_id: userEvan.id,
+  })
+
+  // drew dislike evan
+  const drewDislike = await Dislike.create({
+    user_disliked_id: userEvan.id,
+    user_dislike_id: userDrew.id,
+  })
+
+  const showDislikeResponse = await client
+    .get(`/api/dislikes/${drewDislike.id}`)
+    .loginVia(userEvan, 'jwt')
+    .end()
+
+  console.log(showDislikeResponse.body)
+
+  showDislikeResponse.assertStatus(200)
+})

@@ -18,7 +18,7 @@ class DislikeController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async dislikesGivenUserAuth({ auth }) {
+  async index({ auth }) {
     const user = await auth.getUser()
 
     await user.load('dislikesGiven')
@@ -44,6 +44,17 @@ class DislikeController {
       user_disliked_id: userDislikedId,
       user_dislike_id: auth.user.id,
     })
+  }
+
+  async show({ params }) {
+    const dislikeId = params.id
+
+    const dislike = await Dislike.findOrFail(dislikeId)
+
+    await dislike.load('userDisliked')
+    await dislike.load('userDislike')
+
+    return dislike
   }
 }
 

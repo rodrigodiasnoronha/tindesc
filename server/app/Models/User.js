@@ -35,6 +35,11 @@ class User extends Model {
     return this.hasMany('App/Models/Token')
   }
 
+  // esconde campos na hora de retornar os dados do database
+  static get hidden() {
+    return ['password']
+  }
+
   // likes likes recebidos do usuário
   likesReceived() {
     return this.hasMany('App/Models/Like', 'id', 'user_liked_id')

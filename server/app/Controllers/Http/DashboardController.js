@@ -18,10 +18,17 @@ class DashboardController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async usersList({ request, auth }) {
+  async index({ request, auth }) {
     const query = request.get()
     const page = query.page || 1
     const limit = query.limit || 10
+
+    /**
+     *
+     * @todo
+     * filtragem: não retornar usuários já curtidos ou discurtidos pelo usuário logado
+     *
+     */
 
     return await Database.table('users')
       .whereNot('id', auth.user.id)

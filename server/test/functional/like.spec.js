@@ -83,3 +83,41 @@ test('an user should likes another user', async ({ client }) => {
 
   likeResponse.assertStatus(200)
 })
+
+test('return unique like by id', async ({ client }) => {
+  const userData = {
+    name: 'evan',
+    email: 'evan@email.com',
+    password: '123',
+    username: 'evan',
+  }
+
+  const userData2 = {
+    name: 'drew',
+    email: 'drew@email.com',
+    password: '123',
+    username: 'drew',
+  }
+
+  const userEvan = await User.create(userData)
+  const userDrew = await User.create(userData2)
+
+  // evan like drew
+  await Like.create({
+    user_liked_id: userDrew.id,
+    user_like_id: userEvan.id,
+  })
+
+  // drew like evan
+  const drewLike = await Like.create({
+    user_liked_id: userEvan.id,
+    user_like_id: userDrew.id,
+  })
+
+  const showLikeResponse = await client
+    .get(`/api/likes/${drewLike.id}`)
+    .loginVia(userEvan, 'jwt')
+    .end()
+
+  showLikeResponse.assertStatus(200)
+})

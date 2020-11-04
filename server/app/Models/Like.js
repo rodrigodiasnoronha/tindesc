@@ -4,11 +4,15 @@
 const Model = use('Model')
 
 class Like extends Model {
-  /**
-   * @todo
-   * fazer a relação one to may com user
-   *
-   */
+  // usuário curtido
+  userLiked() {
+    return this.belongsTo('App/Models/User', 'user_liked_id')
+  }
+
+  // usuário que curtiu
+  userLike() {
+    return this.belongsTo('App/Models/User', 'user_like_id')
+  }
 }
 
 module.exports = Like

@@ -10,6 +10,9 @@ const User = use('App/Models/User')
 /**  @type {import('@adonisjs/lucid/src/Lucid/Model')}  */
 const Like = use('App/Models/Like')
 
+/**  @type {import('@adonisjs/lucid/src/Database')}  */
+const Database = use('Database')
+
 class LikeController {
   /**
    *
@@ -18,7 +21,7 @@ class LikeController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async likesGivenUserAuth({ auth, request }) {
+  async index({ auth, request }) {
     const user = await auth.getUser()
 
     await user.load('likesGiven')
@@ -44,6 +47,25 @@ class LikeController {
       user_liked_id: userLikedId,
       user_like_id: auth.user.id,
     })
+  }
+
+  /**
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+
+  async show({ params, auth }) {
+    const likeId = params.id
+
+    const like = await Like.findOrFail(likeId)
+
+    await like.load('userLiked')
+    await like.load('userLike')
+
+    return like
   }
 }
 

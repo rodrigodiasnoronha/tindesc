@@ -26,9 +26,7 @@ Route.get('/', () => {
  *
  */
 
-Route.get('/api/dashboard', 'DashboardController.usersList').middleware([
-  'auth',
-])
+Route.get('/api/dashboard', 'DashboardController.index').middleware(['auth'])
 
 /**
  *
@@ -36,9 +34,9 @@ Route.get('/api/dashboard', 'DashboardController.usersList').middleware([
  *
  */
 
-Route.get('/api/likes', 'LikeController.likesGivenUserAuth').middleware([
-  'auth',
-])
+Route.get('/api/likes', 'LikeController.index').middleware(['auth'])
+Route.get('/api/likes/:id', 'LikeController.show').middleware(['auth'])
+
 Route.post('/api/likes/:userLikedId', 'LikeController.like').middleware([
   'auth',
 ])
@@ -49,10 +47,9 @@ Route.post('/api/likes/:userLikedId', 'LikeController.like').middleware([
  *
  */
 
-Route.get(
-  '/api/dislikes',
-  'DislikeController.dislikesGivenUserAuth'
-).middleware(['auth'])
+Route.get('/api/dislikes', 'DislikeController.index').middleware(['auth'])
+Route.get('/api/dislikes/:id', 'DislikeController.show').middleware(['auth'])
+
 Route.post(
   '/api/dislikes/:userDislikedId',
   'DislikeController.dislike'

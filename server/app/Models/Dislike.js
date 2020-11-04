@@ -4,11 +4,15 @@
 const Model = use('Model')
 
 class Dislike extends Model {
-  /**
-   * @todo
-   * fazer a relação one to may com user
-   *
-   */
+  // usuário descurtido
+  userDisliked() {
+    return this.belongsTo('App/Models/User', 'user_disliked_id')
+  }
+
+  // usuário que descurtiu
+  userDislike() {
+    return this.belongsTo('App/Models/User', 'user_dislike_id')
+  }
 }
 
 module.exports = Dislike
