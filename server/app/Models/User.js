@@ -59,6 +59,15 @@ class User extends Model {
   dislikesGiven() {
     return this.hasMany('App/Models/Dislike', 'id', 'user_dislike_id')
   }
+
+  // provém a URL do avatar do usuário
+  static get computed() {
+    return ['avatar_url']
+  }
+
+  getAvatarUrl({ avatar }) {
+    return `${Env.get('APP_URL')}/files/${avatar}`
+  }
 }
 
 module.exports = User

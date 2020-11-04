@@ -1,6 +1,6 @@
 'use strict'
 /** @type {import('@adonisjs/vow/src/Suite')}  */
-const { test, trait, before, after } = use('Test/Suite')('Auth')
+const { test, trait, before, after } = use('Test/Suite')('Like Tests')
 trait('Test/ApiClient')
 trait('Auth/Client')
 

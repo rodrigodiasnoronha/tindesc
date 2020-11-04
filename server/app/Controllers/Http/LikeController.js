@@ -10,9 +10,6 @@ const User = use('App/Models/User')
 /**  @type {import('@adonisjs/lucid/src/Lucid/Model')}  */
 const Like = use('App/Models/Like')
 
-/**  @type {import('@adonisjs/lucid/src/Database')}  */
-const Database = use('Database')
-
 class LikeController {
   /**
    *

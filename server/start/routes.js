@@ -65,3 +65,12 @@ Route.post('/api/auth/signup', 'AuthController.signUp').validator('SignUp')
 Route.post('/api/auth/signin', 'AuthController.signIn').validator(
   'SignInEmailAndPassword'
 )
+
+/**
+ *
+ * Profile Pic routes
+ *
+ *
+ */
+
+Route.put('/api/profile/avatar', 'AvatarController.update').middleware(['auth'])

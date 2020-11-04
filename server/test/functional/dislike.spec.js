@@ -1,7 +1,7 @@
 'use strict'
 
 /** @type {import('@adonisjs/vow/src/Suite')}  */
-const { test, trait, before, after } = use('Test/Suite')('Auth')
+const { test, trait, before, after } = use('Test/Suite')('Dislike tests')
 trait('Test/ApiClient')
 trait('Auth/Client')
 
@@ -113,8 +113,6 @@ test('return unique dislike by id', async ({ client }) => {
     .get(`/api/dislikes/${drewDislike.id}`)
     .loginVia(userEvan, 'jwt')
     .end()
-
-  console.log(showDislikeResponse.body)
 
   showDislikeResponse.assertStatus(200)
 })
