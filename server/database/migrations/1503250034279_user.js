@@ -13,6 +13,7 @@ class UserSchema extends Schema {
       table.string('avatar', 254)
       table.string('bio')
       table.boolean('is_admin').defaultTo(false)
+      table.string('email_confirmed').defaultTo(false)
 
       table.timestamps()
     })

@@ -6,6 +6,11 @@ trait('Test/ApiClient')
 /** @type {import('@adonisjs/lucid/src/Lucid/Model')}  */
 const User = use('App/Models/User')
 
+/** @type {import('@adonisjs/framework/src/Env')}  */
+const Env = use('Env')
+
+const jwt = require('jsonwebtoken')
+
 before(async () => {
   await User.create({
     name: 'admin',
@@ -73,4 +78,26 @@ test('user signup should fail because email is already registered', async ({
     .end()
 
   signUpResponse.assertStatus(400)
+})
+
+test('reset the user password', async ({ client }) => {
+  const userData = {
+    name: 'rod',
+    username: 'rdn',
+    email: 'rod@email.com',
+    password: '123',
+  }
+
+  const user = await User.create(userData)
+
+  const token = jwt.sign({ id: user.id }, Env.get('JWT_SECRET'), {
+    expiresIn: '10d',
+  })
+
+  const resetPasswordResponse = await client
+    .post('/api/auth/confirm_email')
+    .send({ token })
+    .end()
+
+  resetPasswordResponse.assertStatus(200)
 })

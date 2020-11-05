@@ -6,6 +6,9 @@ const Model = use('Model')
 /** @type {import('@adonisjs/framework/src/Hash')} */
 const Hash = use('Hash')
 
+/** @type {import('@adonisjs/framework/src/Env')}  */
+const Env = use('Env')
+
 class User extends Model {
   static boot() {
     super.boot()

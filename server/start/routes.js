@@ -66,6 +66,10 @@ Route.post('/api/auth/signin', 'AuthController.signIn').validator(
   'SignInEmailAndPassword'
 )
 
+Route.post('/api/auth/confirm_email', 'AuthController.confirmEmail').validator(
+  'ConfirmEmail'
+)
+
 /**
  *
  * Profile Pic routes

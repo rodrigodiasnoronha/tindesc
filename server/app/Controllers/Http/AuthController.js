@@ -5,6 +5,14 @@
 /**  @type {import('@adonisjs/lucid/src/Lucid/Model')}  */
 const User = use('App/Models/User')
 
+/** @type {import('@adonisjs/framework/src/Event')}  */
+const Event = use('Event')
+
+/** @type {import('@adonisjs/framework/src/Env')}  */
+const Env = use('Env')
+
+const jwt = require('jsonwebtoken')
+
 class AuthController {
   /**
    *
@@ -28,7 +36,37 @@ class AuthController {
    * @param {View} ctx.view
    */
   async signUp({ request }) {
-    return await User.create(request.all())
+    const user = await User.create(request.all())
+
+    Event.fire('new::user', user)
+
+    return user
+  }
+
+  /**
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+  async confirmEmail({ request, auth, response }) {
+    const token = request.input('token')
+
+    return jwt.verify(token, Env.get('JWT_SECRET'), async (error, payload) => {
+      if (error)
+        return response.status(400).json({
+          message: 'Token inválido',
+        })
+
+      const userId = payload.id
+      const user = await User.findOrFail(userId)
+
+      user.email_confirmed = true
+      await user.save()
+
+      return user
+    })
   }
 }
 
