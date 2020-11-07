@@ -1,9 +1,0 @@
-html, body, #root {
-    height: 100%;
-    box-sizing: border-box;
-    outline: 0;
-}
-
-.edited {
-    font-family: "Josefin Sans", "Verdana", "Arial", sans-serif;
-}
