@@ -27,6 +27,7 @@ const providers = [
   '@adonisjs/vow/providers/VowProvider',
   '@adonisjs/framework/providers/ViewProvider',
   '@adonisjs/mail/providers/MailProvider',
+  '@adonisjs/cors/providers/CorsProvider',
   existsValidatorProviderPath,
 ]
 
